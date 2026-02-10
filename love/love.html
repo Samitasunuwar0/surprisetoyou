@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="love.css">
+    <title>For Samyam</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous" />
+</head>
+<body>
+    <div class="wrapper">
+        <div class="formInput">
+            <div class="boxHands">
+                <div class="handsCat">
+                    <img src="../image/handsCat.png" alt="">
+                </div>
+                <h1>Welcome!!!</h1>
+            </div>
+
+            <div class="boxSlider">
+                <div class="left"><i class=""></i></div>
+                <div class="right"><i class=""></i></div>
+            </div>
+
+            <div class="boxHandsInput">
+                <div class="handsCatImgInput">
+                    <img src="../image/handsCat.png" alt="">
+                </div>
+                <input type="text" id="inputField" placeholder="..." readonly>
+            </div>
+
+            <div class="buttonLove">
+                <div class="cricleBtn"></div>
+                <div class="button"></div>
+            </div>
+        </div>
+
+        <div class="boxLine">
+            <div class="boxCar"><img src="../image/car.gif" alt=""></div>
+            <div class="boxHeart">
+                <div class="heart1"></div><div class="heart2"></div><div class="heart3"></div>
+                <div class="heart4"></div><div class="heart5"></div><div class="heart6"></div>
+            </div>
+            <div class="ground-line">
+                <div>
+                    <span class="line1"></span><span class="line2"></span><span class="line3"></span>
+                    <span class="line4"></span><span class="line5"></span>
+                    <span class="line1"></span><span class="line2"></span><span class="line3"></span>
+                    <span class="line4"></span><span class="line5"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="loadingLove">
+        <div class="rhombus">
+            <div class="circle1"></div>
+            <div class="circle2"></div>
+        </div>
+    </div>
+
+    <div class="wrapperLetterForm">
+        <div class="boxLetter">
+            <i class="fa-solid fa-xmark"></i>
+            <div class="formLetter">
+                <div class="heartLetter"><div class="heartLetterItem"></div></div>
+                <div class="heartLetter"><div class="heartLetterItem"></div></div>
+
+                <div class="wrapperLetter">
+                    <div class="giftbox">
+                        <div class="img">
+                            <img src="../image/giftbox.png" alt="">
+                        </div>
+                    </div>
+
+                    <div class="textLetter">
+                        <h2></h2>
+
+                        <!-- ✅ MESSAGE AS IMAGE -->
+                        <div class="contentLetter">
+                            <img src="../image/Love.png" alt="Message for Samyam">
+                        </div>
+
+                        <div class="heartAnimation">
+                            <img src="../image/heartAnimation.gif" alt="">
+                        </div>
+                    </div>
+
+                    <div class="mewmew1"><img src="../image/mewmew.gif" alt=""></div>
+                    <div class="mewmew2"><img src="../image/mewmew.gif" alt=""></div>
+                </div>
+            </div>
+            <div class="before"></div>
+        </div>
+    </div>
+
+    <audio id="backgroundMusic" autoplay loop>
+        <source src="../mp3/love.mp3" type="audio/mpeg">
+    </audio>
+
+    <button onclick="playMusic()" style="position: fixed; bottom: 20px; right: 20px; padding: 10px; background: #e98baf; border: none; border-radius: 5px; cursor: pointer;">
+        🎵
+    </button>
+
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+
+    <script>
+        $(window).on('load', function(){
+            $('.loadingLove').delay(1000).fadeOut('fast');
+
+            const inputField = document.getElementById('inputField');
+            const textToType = "Samyam, the message bottle bus is on your way......";
+            let charIndex = 0;
+
+            function typeText(){
+                if(charIndex < textToType.length){
+                    inputField.value += textToType.charAt(charIndex++);
+                    setTimeout(typeText, 100);
+                }
+                if(inputField.value.length === textToType.length){
+                    setTimeout(()=>{$(".buttonLove").css("transform","translateY(0%)");$(".cricleBtn").css("transform","scale(0.1)")},1000)
+                    setTimeout(()=>{$(".cricleBtn").css("transform","scale(1)").html("💗")},2000)
+                    setTimeout(()=>{$(".buttonLove").css("width","120px");$(".button").css("transform","translateX(25px)")},2500)
+                    setTimeout(()=>{$(".button").css({"width":"calc(100% - 25px)","height":"10px"})},3000)
+                    setTimeout(()=>{$(".button").css("height","30px")},3500)
+                    setTimeout(()=>{$(".button").html("Click Me !")},4000)
+                }
+            }
+            setTimeout(typeText,11500);
+        });
+
+        // Title typing (UNCHANGED)
+        let indexText = 0;
+        let textLetter = document.querySelector('.textLetter h2');
+        const textLetterH2 = "Looooolllll";
+        let timoutTextLetter;
+
+        function textCharLetter(){
+            if(indexText < textLetterH2.length){
+                textLetter.textContent += textLetterH2[indexText++];
+            }
+        }
+        function funcTimeoutLetter(){
+            indexText = 0;
+            textLetter.textContent = '';
+            clearInterval(timoutTextLetter);
+            timoutTextLetter = setInterval(textCharLetter,200);
+        }
+
+        // Slider
+        document.querySelector(".right").onclick = ()=> {
+            document.querySelector(".listSlider").appendChild(document.querySelectorAll(".slider")[0]);
+        }
+        document.querySelector(".left").onclick = ()=> {
+            let s = document.querySelectorAll(".slider");
+            document.querySelector(".listSlider").prepend(s[s.length-1]);
+        }
+
+        // Button click
+        document.querySelector(".buttonLove").onclick = ()=>{
+            let timeout = setInterval(()=>{
+                let letters = document.createElement("div");
+                letters.className = "letters";
+                letters.innerHTML = '<img src="../image/letters.png">';
+                document.body.prepend(letters);
+                letters.style.left = Math.random()*100 + "%";
+                letters.style.top = "-10%";
+                setTimeout(()=>letters.style.top="100%",1000);
+                setTimeout(()=>letters.remove(),11000);
+
+                document.querySelectorAll(".letters").forEach(item=>{
+                    item.onclick = ()=>{
+                        clearInterval(timeout);
+                        $(".wrapperLetterForm").fadeIn();
+                        funcTimeoutLetter();
+                    }
+                })
+            },500);
+        }
+
+        document.querySelector(".fa-xmark").onclick = ()=>{
+            $(".wrapperLetterForm").fadeOut();
+        }
+
+        function playMusic(){
+            document.getElementById("backgroundMusic").play();
+        }
+    </script>
+</body>
+</html>
