@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="love.css">
-    <title>For Samyam</title>
+    <title>Samyam</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous" />
 </head>
 <body>
@@ -78,7 +78,10 @@
 
                         <!-- ✅ MESSAGE AS IMAGE -->
                         <div class="contentLetter">
-                            <img src="../image/Love.png" alt="Message for Samyam">
+                            <img src="../image/Love.png" alt="Message for Samyam" id="messageImage" style="cursor:pointer;">
+                            <div id="messageText" style="display:none; margin-top: 10px; color: #e98baf; font-size: 18px; text-align:center;">
+                                Hi Samyam! 💖 This is your special message. The bottle bus is on the way! 🚀
+                            </div>
                         </div>
 
                         <div class="heartAnimation">
@@ -105,31 +108,33 @@
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 
     <script>
-        $(window).on('load', function(){
-            $('.loadingLove').delay(1000).fadeOut('fast');
+    $(window).on('load', function(){
+        // Hide loading screen
+        $('.loadingLove').delay(1000).fadeOut('fast');
 
-            const inputField = document.getElementById('inputField');
-            const textToType = "Samyam, the message bottle bus is on your way......";
-            let charIndex = 0;
+        // Typing text in input field
+        const inputField = document.getElementById('inputField');
+        const textToType = "Samyam, the message bottle bus is on your way......";
+        let charIndex = 0;
 
-            function typeText(){
-                if(charIndex < textToType.length){
-                    inputField.value += textToType.charAt(charIndex++);
-                    setTimeout(typeText, 100);
-                }
-                if(inputField.value.length === textToType.length){
-                    setTimeout(()=>{$(".buttonLove").css("transform","translateY(0%)");$(".cricleBtn").css("transform","scale(0.1)")},1000)
-                    setTimeout(()=>{$(".cricleBtn").css("transform","scale(1)").html("💗")},2000)
-                    setTimeout(()=>{$(".buttonLove").css("width","120px");$(".button").css("transform","translateX(25px)")},2500)
-                    setTimeout(()=>{$(".button").css({"width":"calc(100% - 25px)","height":"10px"})},3000)
-                    setTimeout(()=>{$(".button").css("height","30px")},3500)
-                    setTimeout(()=>{$(".button").html("Click Me !")},4000)
-                }
+        function typeText(){
+            if(charIndex < textToType.length){
+                inputField.value += textToType.charAt(charIndex++);
+                setTimeout(typeText, 100);
             }
-            setTimeout(typeText,11500);
-        });
+            if(inputField.value.length === textToType.length){
+                // Animate love button
+                setTimeout(()=>{$(".buttonLove").css("transform","translateY(0%)");$(".cricleBtn").css("transform","scale(0.1)")},1000);
+                setTimeout(()=>{$(".cricleBtn").css("transform","scale(1)").html("💗")},2000);
+                setTimeout(()=>{$(".buttonLove").css("width","120px");$(".button").css("transform","translateX(25px)")},2500);
+                setTimeout(()=>{$(".button").css({"width":"calc(100% - 25px)","height":"10px"})},3000);
+                setTimeout(()=>{$(".button").css("height","30px")},3500);
+                setTimeout(()=>{$(".button").html("Click Me !")},4000);
+            }
+        }
+        setTimeout(typeText,11500);
 
-        // Title typing (UNCHANGED)
+        // Letter typing
         let indexText = 0;
         let textLetter = document.querySelector('.textLetter h2');
         const textLetterH2 = "Looooolllll";
@@ -147,7 +152,7 @@
             timoutTextLetter = setInterval(textCharLetter,200);
         }
 
-        // Slider
+        // Slider controls
         document.querySelector(".right").onclick = ()=> {
             document.querySelector(".listSlider").appendChild(document.querySelectorAll(".slider")[0]);
         }
@@ -156,7 +161,13 @@
             document.querySelector(".listSlider").prepend(s[s.length-1]);
         }
 
-        // Button click
+        // Function to show the letter form
+        function showLetterForm() {
+            $(".wrapperLetterForm").fadeIn();
+            funcTimeoutLetter();
+        }
+
+        // Button click -> create falling letters
         document.querySelector(".buttonLove").onclick = ()=>{
             let timeout = setInterval(()=>{
                 let letters = document.createElement("div");
@@ -168,23 +179,37 @@
                 setTimeout(()=>letters.style.top="100%",1000);
                 setTimeout(()=>letters.remove(),11000);
 
-                document.querySelectorAll(".letters").forEach(item=>{
-                    item.onclick = ()=>{
-                        clearInterval(timeout);
-                        $(".wrapperLetterForm").fadeIn();
-                        funcTimeoutLetter();
-                    }
-                })
+                letters.onclick = ()=> {
+                    clearInterval(timeout);
+                    showLetterForm();
+                }
             },500);
         }
 
+        // Make content letter image clickable
+        document.getElementById('messageImage').onclick = () => {
+            // Show the letter popup
+            $(".wrapperLetterForm").fadeIn();
+            funcTimeoutLetter();
+
+            // Show the hidden message text
+            document.getElementById('messageText').style.display = 'block';
+        };
+
+        // Close letter form
         document.querySelector(".fa-xmark").onclick = ()=>{
             $(".wrapperLetterForm").fadeOut();
+            // Hide message text again for next click
+            document.getElementById('messageText').style.display = 'none';
         }
 
+        // Play music
         function playMusic(){
             document.getElementById("backgroundMusic").play();
         }
+
+        window.playMusic = playMusic; // Expose globally for button
+    });
     </script>
 </body>
 </html>
