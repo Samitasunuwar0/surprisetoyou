@@ -6,6 +6,12 @@
     <link rel="stylesheet" href="love.css">
     <title>Samyam</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous" />
+    <style>
+        /* Ensure the image is clickable */
+        #messageImage {
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <div class="wrapper">
@@ -78,7 +84,7 @@
 
                         <!-- ✅ MESSAGE AS IMAGE -->
                         <div class="contentLetter">
-                            <img src="../image/Love.png" alt="Message for Samyam" id="messageImage" style="cursor:pointer;">
+                            <img src="../image/Love.png" alt="Message for Samyam" id="messageImage">
                             <div id="messageText" style="display:none; margin-top: 10px; color: #e98baf; font-size: 18px; text-align:center;">
                                 Hi Samyam! 💖 This is your special message. The bottle bus is on the way! 🚀
                             </div>
@@ -187,27 +193,27 @@
         }
 
         // Make content letter image clickable
-        document.getElementById('messageImage').onclick = () => {
+        $('#messageImage').on('click', function() {
             // Show the letter popup
             $(".wrapperLetterForm").fadeIn();
+
+            // Start typing animation
             funcTimeoutLetter();
 
-            // Show the hidden message text
-            document.getElementById('messageText').style.display = 'block';
-        };
+            // Show the hidden message
+            $('#messageText').fadeIn();
+        });
 
         // Close letter form
-        document.querySelector(".fa-xmark").onclick = ()=>{
+        $(".fa-xmark").on('click', function(){
             $(".wrapperLetterForm").fadeOut();
-            // Hide message text again for next click
-            document.getElementById('messageText').style.display = 'none';
-        }
+            $("#messageText").hide(); // hide message for next click
+        });
 
         // Play music
         function playMusic(){
             document.getElementById("backgroundMusic").play();
         }
-
         window.playMusic = playMusic; // Expose globally for button
     });
     </script>
