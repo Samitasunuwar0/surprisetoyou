@@ -84,7 +84,6 @@
                         <!-- ✅ MESSAGE AS IMAGE -->
                         <div class="contentLetter">
                             <img src="../image/Love.png" alt="Message for Samyam" id="messageImage">
-                            
                         </div>
 
                         <div class="heartAnimation">
@@ -137,24 +136,6 @@
         }
         setTimeout(typeText,11500);
 
-        // Letter typing
-        let indexText = 0;
-        let textLetter = document.querySelector('.textLetter h2');
-        const textLetterH2 = "You just got Rickrolled!!!";
-        let timoutTextLetter;
-
-        function textCharLetter(){
-            if(indexText < textLetterH2.length){
-                textLetter.textContent += textLetterH2[indexText++];
-            }
-        }
-        function funcTimeoutLetter(){
-            indexText = 0;
-            textLetter.textContent = '';
-            clearInterval(timoutTextLetter);
-            timoutTextLetter = setInterval(textCharLetter,200);
-        }
-
         // Slider controls
         document.querySelector(".right").onclick = ()=> {
             document.querySelector(".listSlider").appendChild(document.querySelectorAll(".slider")[0]);
@@ -164,14 +145,14 @@
             document.querySelector(".listSlider").prepend(s[s.length-1]);
         }
 
-        // Function to show the letter form
+        // Function to show the letter form instantly with message
         function showLetterForm() {
             $(".wrapperLetterForm").fadeIn();
-            funcTimeoutLetter();
+            document.querySelector('.textLetter h2').textContent = "You just got Rickrolled!!!";
         }
 
         // Button click -> create falling letters
-        document.querySelector(".buttonLove").onclick = ()=>{
+        document.querySelector(".buttonLove").onclick = ()=> {
             let timeout = setInterval(()=>{
                 let letters = document.createElement("div");
                 letters.className = "letters";
@@ -191,20 +172,12 @@
 
         // Make content letter image clickable
         $('#messageImage').on('click', function() {
-            // Show the letter popup
-            $(".wrapperLetterForm").fadeIn();
-
-            // Start typing animation
-            funcTimeoutLetter();
-
-            // Show the hidden message
-            $('#messageText').fadeIn();
+            showLetterForm(); // instantly show popup and message
         });
 
         // Close letter form
         $(".fa-xmark").on('click', function(){
             $(".wrapperLetterForm").fadeOut();
-            $("#messageText").hide(); // hide message for next click
         });
 
         // Play music
